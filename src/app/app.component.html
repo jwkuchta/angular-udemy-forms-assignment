@@ -1,18 +1,74 @@
+<!-- Add a Form with the following Inputs (and Validators)
+1) Mail address (should not be empty and should be an email address)
+2) A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
+Set "Advanced" as Default
+3) A Password field (should not be empty)
+4) A Submit Button
+
+Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
+Upon submitting the form, you should simply print the Value of the Form to the Console.
+Optionally, display it in your template. -->
+
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <!-- Add a Form with the following Inputs (and Validators)
-           1) Mail address (should not be empty and should be an email address)
-           2) A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
-              Set "Advanced" as Default
-           3) A Password field (should not be empty)
-           4) A Submit Button
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="form-group">
+          
+          <label for="email">Email</label>
+          <input
+          type="text"
+          id="email"
+          class="form-control"
+          ngModel
+          required
+          email
+          name="email">
 
-           Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
+          <label for="subscription">Select Subscription Type</label>
+          <select
+          id="subscription"
+          name="subscription"
+          class="form-control"
+          [ngModel]="defaultType">
+            <option value="basic">Basic</option>
+            <option value="advanced">Advanced</option>
+            <option value="pro">Pro</option>
+          </select>
 
-           Upon submitting the form, you should simply print the Value of the Form to the Console.
-           Optionally, display it in your template.
-      -->
+          <label>Password</label>
+          <input
+          name="password"
+          id="password"
+          type="password"
+          class="form-control"
+          ngModel
+          required>
+        </div>
+
+        <span class="help-block" *ngIf="form.touched && !form.valid">
+          Input incorrect or incomplete
+        </span>
+
+        <button 
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!form.valid"
+        >Submit</button>
+
+      </form>
+
+      <hr>
+
+      <div class="row" *ngIf="formSubmitted">
+        <div class="col-xs-12">
+          <h3>Your Data</h3>
+          <p>Email: {{ userData.email }}</p>
+          <p>Subscription Type: {{ userData.subscription }}</p>
+          <p>Password: {{ userData.password }}</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
